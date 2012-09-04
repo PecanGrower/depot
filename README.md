@@ -1,0 +1,1 @@
+This is the demo application (depot) for Agile Web Development with Rails.
