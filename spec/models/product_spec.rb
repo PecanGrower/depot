@@ -10,24 +10,24 @@ describe Product do
 
   describe "attributes" do
   	
-  	it { should respond_to :name }
+  	it { should respond_to :title }
   	it { should respond_to :description }
   	it { should respond_to :image_url }
   	it { should respond_to :price }
 
   	describe "validate" do
   		
-  		describe ":name" do
+  		describe ":title" do
 
   			it "is invalid when less than 10 characters" do
-  				product.name = "a" * 9
+  				product.title = "a" * 9
   				expect(product).not_to be_valid
   			end
 
         it "is invalid when duplicated" do
-          product.name = "Duplicate Name"
+          product.title = "Duplicate Title"
           product.save
-          expect(build :product, name: "Duplicate Name").not_to be_valid
+          expect(build :product, title: "Duplicate Title").not_to be_valid
         end
   		end
 

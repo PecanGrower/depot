@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(:version => 20120904165524) do
 
   create_table "products", :force => true do |t|
-    t.string   "name"
+    t.string   "title"
     t.text     "description"
     t.string   "image_url"
     t.decimal  "price",       :precision => 8, :scale => 2
@@ -22,6 +22,6 @@ ActiveRecord::Schema.define(:version => 20120904165524) do
     t.datetime "updated_at",                                :null => false
   end
 
-  add_index "products", ["name"], :name => "index_products_on_name", :unique => true
+  add_index "products", ["title"], :name => "index_products_on_title", :unique => true
 
 end
