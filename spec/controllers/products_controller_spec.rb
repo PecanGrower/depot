@@ -109,7 +109,7 @@ describe ProductsController do
 			end
 
 			it "redirects to Product#show page" do
-				expect(response).to redirect_to @product
+				expect(response).to redirect_to product
 			end
 		end
 
@@ -147,7 +147,7 @@ describe ProductsController do
 
 		it "redirects to Products#index" do
 			delete :destroy, id: product
-			expect(response).to redirect_to 'products/index'
+			expect(response).to redirect_to products_path
 		end
 	end
 end
