@@ -2,20 +2,20 @@ require 'spec_helper'
 
 describe Product do
   
-  let(:product) { build(:product) }
+  let!(:product) { Product.new(attributes_for(:product)) }
 
   subject { product }
 
   it { should be_valid }
 
-  describe "attributes" do
+  describe "has attributes" do
   	
   	it { should respond_to :title }
   	it { should respond_to :description }
   	it { should respond_to :image_url }
   	it { should respond_to :price }
 
-  	describe "validate" do
+  	describe "that validate" do
   		
   		describe ":title" do
 
@@ -68,5 +68,35 @@ describe Product do
         end
   		end
   	end
+  end
+
+  describe "has associations" do
+    
+    it { should respond_to :line_items }
+
+    context "with dependent :line_items" do
+      before do        
+        product.save
+        cart = create(:cart)
+        cart.line_items.create(product_id: product.id)
+      end
+
+      it "prevents :product.destroy" do
+        expect { product.destroy }.not_to change(Product, :count)
+      end
+
+      it "has the correct error message" do
+        product.destroy
+        product.errors[:base].should include 'Line Items present'
+      end
+    end
+
+    context "without dependent :line_items" do
+      
+      it "permits :product.destroy" do
+        product.save
+        expect { product.destroy }.to change(Product, :count).by(-1)
+      end
+    end
   end
 end
