@@ -8,7 +8,7 @@ describe Cart do
 
   it { should be_valid }
 
-  describe "has associations" do
+  describe "has association" do
     
     it { should respond_to :line_items }
 
@@ -39,11 +39,6 @@ describe Cart do
         it "adds the correct product to the line item" do
           line_item = cart.add_product(product)
           expect(line_item.product).to eq product
-        end
-
-        it "has a quantity of 1" do
-          line_item = cart.add_product(product)
-          expect(line_item.quantity).to eq 1
         end
       end
 
