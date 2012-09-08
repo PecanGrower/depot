@@ -47,24 +47,18 @@ describe LineItem do
           expect(line_item.quantity).to eq 1
         end
         
-        context "when nil" do
-          
-          it "is 1 for quantity" do
-            line_item.quantity = nil
-            line_item.save
-            line_item.reload
-            expect(line_item.quantity).to eq 1
-          end
+        it "is 1 for quantity when nil" do
+          line_item.quantity = nil
+          line_item.save
+          line_item.reload
+          expect(line_item.quantity).to eq 1
         end
 
-        context "when value set to non-nil" do
-
-          it "is 'assigned value' for quantity" do
-            line_item.quantity = 2
-            line_item.save
-            line_item.reload
-            expect(line_item.quantity).to eq 2
-          end
+        it "is not changed when non-nil" do
+          line_item.quantity = 2
+          line_item.save
+          line_item.reload
+          expect(line_item.quantity).to eq 2
         end
       end
     end
