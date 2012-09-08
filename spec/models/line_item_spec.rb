@@ -11,12 +11,13 @@ describe LineItem do
 
   it { should be_valid }
 
-  describe "has attributes" do
+  describe "attributes" do
     
     it { should respond_to :cart_id }
     it { should respond_to :product_id }
+    it { should respond_to :quantity }
 
-    describe "protected from MassAssignment" do
+    describe "MassAssignment protection" do
       
       it "does not allow access to cart_id" do
         expect do
@@ -25,7 +26,7 @@ describe LineItem do
       end
     end
 
-    describe "which validate" do
+    describe "validate" do
       
       it "is invalid without :cart_id" do
         line_item.cart_id = nil
@@ -35,6 +36,29 @@ describe LineItem do
       it "is invalid without :product_id" do
         line_item.product_id = nil
         expect(line_item).not_to be_valid
+      end
+    end
+
+    describe "default value" do
+      
+      context "when nil" do
+        
+        it "is 1 for quantity" do
+          line_item.quantity = nil
+          line_item.save
+          line_item.reload
+          expect(line_item.quantity).to eq 1
+        end
+      end
+
+      context "when value set to non-nil" do
+
+        it "is 'assigned value' for quantity" do
+          line_item.quantity = 2
+          line_item.save
+          line_item.reload
+          expect(line_item.quantity).to eq 2
+        end
       end
     end
   end

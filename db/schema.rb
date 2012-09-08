@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120907022553) do
+ActiveRecord::Schema.define(:version => 20120908043355) do
 
   create_table "carts", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20120907022553) do
     t.integer  "cart_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "quantity"
   end
 
   add_index "line_items", ["product_id", "cart_id"], :name => "index_line_items_on_product_id_and_cart_id"
