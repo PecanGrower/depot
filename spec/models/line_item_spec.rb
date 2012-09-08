@@ -40,24 +40,31 @@ describe LineItem do
     end
 
     describe "default value" do
-      
-      context "when nil" do
+
+      describe "for :quantity" do
         
-        it "is 1 for quantity" do
-          line_item.quantity = nil
-          line_item.save
-          line_item.reload
+        it "is 1 after .build" do
           expect(line_item.quantity).to eq 1
         end
-      end
+        
+        context "when nil" do
+          
+          it "is 1 for quantity" do
+            line_item.quantity = nil
+            line_item.save
+            line_item.reload
+            expect(line_item.quantity).to eq 1
+          end
+        end
 
-      context "when value set to non-nil" do
+        context "when value set to non-nil" do
 
-        it "is 'assigned value' for quantity" do
-          line_item.quantity = 2
-          line_item.save
-          line_item.reload
-          expect(line_item.quantity).to eq 2
+          it "is 'assigned value' for quantity" do
+            line_item.quantity = 2
+            line_item.save
+            line_item.reload
+            expect(line_item.quantity).to eq 2
+          end
         end
       end
     end
