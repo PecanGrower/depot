@@ -17,7 +17,8 @@ describe "Store" do
   end
 
   describe "add-to-cart button" do
-    let!(:all_products) { 3.times { create(:product) } }
+    let!(:product) { create(:product) }
+    let!(:other_product) { create(:product) }
     before { visit store_path }
 
     it "is present" do
@@ -28,6 +29,21 @@ describe "Store" do
       expect do
         click_button 'Add'
       end.to change(LineItem, :count).by(1)
+    end
+
+    it "redirects to Cart#show" do
+      click_button 'Add'
+      expect(page).to have_selector 'h2', text: 'Your Pragmatic Cart'
+    end
+
+    it "displays flash[:notice]" do
+      click_button 'Add'
+      expect(page).to have_selector '#notice'
+    end
+
+    it "displays the product.title" do
+      click_button 'Add'
+      expect(page).to have_selector 'li', text: product.title
     end
   end
 end
