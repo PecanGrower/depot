@@ -1,12 +1,11 @@
 require 'spec_helper'
 
 describe "Store" do
+  let!(:all_products) { 3.times { create(:product) } }
 
   describe "catalog listing" do
-    let!(:all_products) { 3.times { create(:product) } }
     before { visit store_path }
   	it "has the correct page elements" do
-      # time = Time.now.asctime
   		visit store_path
   		expect(page).to have_selector '#columns #side a', minimum: 4
       expect(page).to have_selector '#time'
@@ -18,39 +17,12 @@ describe "Store" do
   	end
   end
 
-  describe "add-to-cart button" do
-    let!(:product) { create(:product) }
-    let!(:other_product) { create(:product) }
-    before { visit store_path }
-
-    it "is present" do
-      expect(page).to have_button product.title
-    end
-
-    xit "adds a new line-item to cart" do
-      expect do
-        click_button 'Add'
-      end.to change(LineItem, :count).by(1)
-    end
-
-    xit "redirects to Cart#show" do
-     click_button 'Add'
-      expect(page).to have_selector 'h2', text: 'Your Pragmatic Cart'
-    end
-
-    xit "displays flash[:notice]" do
+  describe "Add to Cart button" do
+    
+    it "displays a flash:notice " do
+      visit store_path
       click_button 'Add'
       expect(page).to have_selector '#notice'
     end
-
-    xit "displays the product.title" do
-      click_button product.title
-      expect(page).to have_selector 'li', text: product.title
-    end
-
-    xit "displays the product.quantity" do
-      click_button 'Add'
-      expect(page).to have_selector 'li', text: 'Qty: 1'
-    end    
   end
 end
