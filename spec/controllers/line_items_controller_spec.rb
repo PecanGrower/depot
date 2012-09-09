@@ -50,10 +50,5 @@ describe LineItemsController do
       post :create, product_id: product.id
       expect(response).to redirect_to(cart_path(cart.id))
     end
-
-    # it "has a :notice flash" do
-    #   post :create, product_id: product.id
-    #   expect(response).to have_selector 'p', text: 'Line item was success'
-    # end
   end
 end

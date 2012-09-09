@@ -35,6 +35,4 @@ describe CartsController do
       end
     end
   end
-
-
 end
