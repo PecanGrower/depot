@@ -24,6 +24,12 @@ describe LineItem do
           LineItem.new(cart_id: 1)
         end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
       end
+
+      it "does not allow access to :quantity" do
+        expect do
+          LineItem.new(quantity: 1)
+        end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+      end
     end
 
     describe "validate" do
