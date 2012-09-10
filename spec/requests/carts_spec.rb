@@ -13,7 +13,7 @@ describe "Carts Pages" do
     end
 
     describe "elements" do
-      it { should have_selector 'h2', text: 'Your Pragmatic Cart' }
+      it { should have_selector '.cart_title', text: 'Your Cart' }
       it { should have_button 'Empty cart' }
     end
 
