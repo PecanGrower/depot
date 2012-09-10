@@ -17,15 +17,8 @@ describe "Store" do
         expect(page).to have_selector 'h3', text: product.title
         expect(page).to have_selector '.price', text: /\$[,\d]+\.\d\d/
         expect(page).to have_selector '.price', text: product.price.to_s
+        expect(page).to have_button product.title
       end
-    end
-  end
-
-  describe "Add to Cart button" do
-    
-    it "displays a flash:notice " do
-      click_button 'Add'
-      expect(page).to have_selector '#notice'
     end
   end
 end
