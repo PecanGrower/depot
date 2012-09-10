@@ -3,8 +3,8 @@
 <% end %>
 
 <h2>Your Pragmatic Cart</h2>
-<ul>
+<table>
   <%= render @cart.line_items %>
-</ul>
+</table>
 
 <%= button_to 'Empty cart', @cart, method: :delete %>

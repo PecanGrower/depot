@@ -1,3 +1,4 @@
-<li id='product_<%= line_item.product.id %>'>
-  <%= line_item.quantity %> &times; <%= line_item.product.title %>
-</li>
+<tr id='product_<%= line_item.product.id %>'>
+  <td><%= line_item.quantity %>&times;</td>
+  <td><%= line_item.product.title %></td>
+</tr>
