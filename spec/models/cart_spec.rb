@@ -14,7 +14,7 @@ describe Cart do
 
     it "that destroy dependent :line_items" do
       cart.save
-      cart.line_items.create(product_id: create(:product).id)
+      cart.add_product(create(:product)).save
       cart.destroy
       expect(LineItem.find_by_cart_id(cart.id)).to be_nil
     end
@@ -40,13 +40,19 @@ describe Cart do
           line_item = cart.add_product(product)
           expect(line_item.product).to eq product
         end
+
+        it "sets line_item.price as product.price" do
+          line_item = cart.add_product(product)
+          expect(line_item.price).to eq product.price
+        end
       end
 
       context "when the product is already in the cart" do
-        let!(:cart) { create(:cart) }
         let!(:product) { create(:product) }
-        let!(:previous_line_item) do
-          cart.line_items.create(product_id: product.id)
+        before do
+          cart.save
+          @previous_item = cart.add_product(product)
+          @previous_item.save
         end
 
         it "does not add a new line_item to the cart" do
@@ -61,7 +67,7 @@ describe Cart do
 
         it "increases the product quantity by 1" do
           line_item = cart.add_product(product)
-          expect(line_item.quantity).to eq (previous_line_item.quantity + 1)
+          expect(line_item.quantity).to eq (@previous_item.quantity + 1)
         end
       end
     end
@@ -70,16 +76,13 @@ describe Cart do
       
       it "is the sum of line_item.total_price" do
         cart.save
-        first_product = create(:product)
-        second_product = create(:product)
-        first_line_item = create(:line_item, cart_id: cart.id, 
-                                             product_id: first_product.id,
-                                             quantity: 2)
-        second_line_item = create(:line_item, cart_id: cart.id, 
-                                              product_id: second_product.id,
-                                              quantity: 3)
-        expected_price = first_line_item.total_price + 
-                         second_line_item.total_price
+        product = create(:product)
+        other_product = create(:product)
+        item = cart.add_product(product)
+        other_item = cart.add_product(other_product)
+        item.save
+        other_item.save
+        expected_price = item.total_price + other_item.total_price
         expect(cart.total_price).to eq expected_price
       end
     end

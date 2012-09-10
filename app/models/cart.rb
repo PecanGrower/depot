@@ -10,6 +10,8 @@ class Cart < ActiveRecord::Base
       return line_item
     else
       line_item = line_items.build(product_id: product.id)
+      line_item.price = product.price
+      return line_item
     end
   end
 

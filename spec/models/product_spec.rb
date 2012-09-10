@@ -78,7 +78,8 @@ describe Product do
       before do        
         product.save
         cart = create(:cart)
-        cart.line_items.create(product_id: product.id)
+        line_item = cart.add_product(product)
+        line_item.save
       end
 
       it "prevents :product.destroy" do

@@ -4,7 +4,7 @@ describe LineItem do
   let(:cart) { create(:cart) }
   let(:product) { create(:product) }
   let(:line_item) do
-    cart.line_items.new(attributes_for(:line_item, product_id: product.id))
+    cart.add_product(product)
   end
 
   subject { line_item }
@@ -16,6 +16,7 @@ describe LineItem do
     it { should respond_to :cart_id }
     it { should respond_to :product_id }
     it { should respond_to :quantity }
+    it { should respond_to :price }
 
     describe "MassAssignment protection" do
       
@@ -30,6 +31,12 @@ describe LineItem do
           LineItem.new(quantity: 1)
         end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
       end
+
+      it "does not allow access to :price" do
+        expect do
+          LineItem.new(price: 1)
+        end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+      end
     end
 
     describe "validate" do
@@ -41,6 +48,11 @@ describe LineItem do
 
       it "is invalid without :product_id" do
         line_item.product_id = nil
+        expect(line_item).not_to be_valid
+      end
+
+      it "is invalid without a numerical :price" do
+        line_item.price = nil
         expect(line_item).not_to be_valid
       end
     end
@@ -79,11 +91,16 @@ describe LineItem do
   describe "methods" do
     
     describe "#total_price" do
-      let(:new_line_item) { create(:line_item, quantity: 2) }
-      
-      it "multiplies the quantity times the price" do
-        expected_total = new_line_item.product.price * new_line_item.quantity
-        expect(new_line_item.total_price).to eq expected_total
+      before do
+        line_item.quantity = 2
+        line_item.save
+        product.price += 1 # Ensure product.price !eq line_item.price
+        product.save
+      end
+
+      it "calculates quantity * line_item.price" do
+        expected_total = line_item.quantity * line_item.price
+        expect(line_item.total_price.to_s).to eq expected_total.to_s
       end
     end
   end

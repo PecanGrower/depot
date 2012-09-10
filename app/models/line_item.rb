@@ -6,11 +6,12 @@ class LineItem < ActiveRecord::Base
 
   validates :cart_id, presence: true
   validates :product_id, presence: true
+  validates :price, numericality: { greater_than_or_equal_to: 0.01 }
 
   before_create :default_values
 
   def total_price
-    product.price * quantity
+    price * quantity
   end
 
   private
