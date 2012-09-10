@@ -41,6 +41,11 @@ describe "Carts Pages" do
       it "deletes cart" do
         expect{ click_button 'Empty cart' }.to change(Cart, :count).by(-1)
       end
+
+      it "displays :notice message" do
+        click_button 'Empty cart'
+        expect(page).to have_selector '#notice', text: 'Your cart'
+      end
     end
   end
 end
