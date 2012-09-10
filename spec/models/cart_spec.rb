@@ -65,5 +65,23 @@ describe Cart do
         end
       end
     end
+
+    describe "#total_price" do
+      
+      it "is the sum of line_item.total_price" do
+        cart.save
+        first_product = create(:product)
+        second_product = create(:product)
+        first_line_item = create(:line_item, cart_id: cart.id, 
+                                             product_id: first_product.id,
+                                             quantity: 2)
+        second_line_item = create(:line_item, cart_id: cart.id, 
+                                              product_id: second_product.id,
+                                              quantity: 3)
+        expected_price = first_line_item.total_price + 
+                         second_line_item.total_price
+        expect(cart.total_price).to eq expected_price
+      end
+    end
   end
 end

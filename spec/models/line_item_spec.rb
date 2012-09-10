@@ -70,9 +70,21 @@ describe LineItem do
     end
   end
 
-  describe "has associations" do
+  describe "associations" do
     
     it { should respond_to :cart }
     it { should respond_to :product }
+  end
+
+  describe "methods" do
+    
+    describe "#total_price" do
+      let(:new_line_item) { create(:line_item, quantity: 2) }
+      
+      it "multiplies the quantity times the price" do
+        expected_total = new_line_item.product.price * new_line_item.quantity
+        expect(new_line_item.total_price).to eq expected_total
+      end
+    end
   end
 end

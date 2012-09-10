@@ -9,6 +9,10 @@ class LineItem < ActiveRecord::Base
 
   before_create :default_values
 
+  def total_price
+    product.price * quantity
+  end
+
   private
 
     def default_values
