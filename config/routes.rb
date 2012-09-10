@@ -5,7 +5,7 @@ Depot::Application.routes.draw do
   # get "store/index"
   # resources :store, only: [:index]
   resources :products
-  resources :carts, only: [:show]
+  resources :carts, only: [:show, :destroy]
   resources :line_items, only: [:create]
 
   # The priority is based upon order of creation:

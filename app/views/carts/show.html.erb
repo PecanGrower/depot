@@ -6,3 +6,5 @@
 <ul>
   <%= render @cart.line_items %>
 </ul>
+
+<%= button_to 'Empty cart', @cart, method: :delete %>
