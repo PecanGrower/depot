@@ -1,10 +1,14 @@
 class LineItemsController < ApplicationController
 
   def create
-    @line_item = current_cart.add_product(Product.find(params[:product_id]))
-    if @line_item.save
-      redirect_to store_url
-    end 
+    @cart = current_cart
+    @line_item = @cart.add_product(Product.find(params[:product_id]))
+    respond_to do |format|
+      if @line_item.save
+        format.html { redirect_to store_url }
+        format.js
+      end 
+    end
   end
 
   def destroy

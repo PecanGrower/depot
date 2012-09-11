@@ -10,6 +10,10 @@ describe LineItemsController do
       post :create, product_id: product.id
     end
 
+    it "assigns current_cart to @cart" do
+      expect(assigns(:cart)).to eq cart
+    end
+
     context "when user has a cart" do
 
       it "saves the line_item" do
