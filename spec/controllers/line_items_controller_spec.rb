@@ -16,8 +16,8 @@ describe LineItemsController do
         expect(assigns(:line_item)).not_to be_changed
       end
 
-      it "redirects to cart#show after saving line_item" do
-        expect(response).to redirect_to(cart_path(cart.id))
+      it "redirects to store after saving line_item" do
+        expect(response).to redirect_to(store_url)
       end
 
       context "when product is previously in cart" do
