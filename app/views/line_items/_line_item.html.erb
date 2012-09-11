@@ -2,5 +2,7 @@
   <td><%= line_item.quantity %>&times;</td>
   <td><%= line_item.product.title %></td>
   <td class="item_price"><%= number_to_currency(line_item.total_price) %></td>
-  <td><%= button_to "Remove item", line_item, method: :delete %></td>
+  <% if request.env['PATH_INFO'] == cart_path(line_item.cart) %>
+    <td><%= button_to "Remove item", line_item, method: :delete %></td>
+  <% end %>
 </tr>
