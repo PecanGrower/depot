@@ -15,6 +15,10 @@ describe "Store" do
       expect(page).to have_link 'Home', href: store_path
     end
 
+    it "has 'Your cart' in the sidebart" do
+      expect(page).to have_selector '#side #cart', text: 'Your Cart'
+    end
+
     it "lists all of the products" do
       Product.all.each do |product|
         expect(page).to have_selector 'h3', text: product.title
