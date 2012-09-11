@@ -17,20 +17,34 @@ describe "Carts Pages" do
       it { should have_button 'Empty cart' }
     end
 
-    describe "products" do
+    describe "line items" do
       let(:other_product) { create(:product) }
       before do
         2.times { cart.add_product(other_product).save }
         visit current_path # reload cart page
       end
 
-      it "are listed with quantities" do
+      it "lists products with quantity and 'remove' button" do
         cart.line_items.each do |item|
           expect(page).to have_selector "#product_#{item.product.id}",
                                         text: item.product.title 
           expect(page).to have_selector "#product_#{item.product.id}",
                                         text: item.quantity.to_s
+          expect(page).to have_button "Remove item"
         end
+      end
+    end
+
+    describe "remove_item button" do
+      let(:item) { cart.line_items.first }
+
+      it { should have_selector "form.button_to
+                                 [action*=\"#{line_item_path(item)}\"]
+                                 input[value=delete]" }
+
+      it "redirects to cart" do
+        click_button "Remove item"
+        expect(page).to have_selector '.cart_title', text: 'Your Cart'
       end
     end
 

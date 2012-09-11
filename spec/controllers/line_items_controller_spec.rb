@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe LineItemsController do
+  let(:product) { create(:product) }
+  let(:cart) { create(:cart) }
 
   describe "POST :create" do
-    let(:product) { create(:product) }
-    let(:cart) { create(:cart) }
     before do
       session[:cart_id] = cart.id
       post :create, product_id: product.id
@@ -43,6 +43,26 @@ describe LineItemsController do
           post :create, product_id: product.id
         end.to change(Cart, :count).by(1)
       end
+    end
+  end
+
+  describe "DELETE :destroy" do
+    let(:line_item) { cart.line_items.first }
+    before do
+      session[:cart_id] = cart.id
+      item = cart.add_product(product)
+      item.save
+    end
+
+    it "assigns the correct line_item to @line_item" do
+      delete :destroy, id: line_item
+      expect(assigns(:line_item)).to eq line_item
+    end
+
+    it "deletes line_item" do
+      expect do
+        delete :destroy, id: line_item
+      end.to change(LineItem, :count).by(-1)
     end
   end
 end

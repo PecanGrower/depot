@@ -6,7 +6,7 @@ Depot::Application.routes.draw do
   # resources :store, only: [:index]
   resources :products
   resources :carts, only: [:show, :destroy]
-  resources :line_items, only: [:create]
+  resources :line_items, only: [:create, :destroy]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

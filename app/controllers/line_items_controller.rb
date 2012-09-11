@@ -6,4 +6,10 @@ class LineItemsController < ApplicationController
       redirect_to @line_item.cart
     end 
   end
+
+  def destroy
+    @line_item = current_cart.line_items.find_by_id(params[:id])
+    @line_item.destroy
+    redirect_to current_cart
+  end
 end

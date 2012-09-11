@@ -6,11 +6,14 @@ describe "Store" do
 
   describe "catalog listing" do
   	it "has the correct page elements" do
-  		visit store_path
   		expect(page).to have_selector '#columns #side a', minimum: 4
       expect(page).to have_selector '#time'
       expect(page).to have_selector '#main .entry', count: 3
   	end
+
+    it "has the correct links" do
+      expect(page).to have_link 'Home', href: store_path
+    end
 
     it "lists all of the products" do
       Product.all.each do |product|
