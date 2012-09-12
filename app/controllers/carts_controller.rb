@@ -7,6 +7,6 @@ class CartsController < ApplicationController
   def destroy
     @cart = current_cart
     @cart.destroy
-    redirect_to store_url, notice: 'Your cart is currently empty'
+    redirect_to store_url
   end
 end

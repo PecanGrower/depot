@@ -57,7 +57,7 @@ describe "Carts Pages" do
 
       it "displays :notice message" do
         click_button 'Empty cart'
-        expect(page).to have_selector '#notice', text: 'Your cart'
+        expect(page).not_to have_selector '#notice'
       end
     end
   end

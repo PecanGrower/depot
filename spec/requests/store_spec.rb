@@ -1,23 +1,44 @@
 require 'spec_helper'
 
 describe "Store" do
-  let!(:all_products) { 3.times { create(:product) } }
-  before { visit store_path }
+  before do
+    2.times { create(:product) }
+    visit store_path
+  end
+
+  subject { page }
+
+  describe "sidebar" do
+
+    describe "elements" do
+      it { should have_selector '#time' }
+    end  
+    
+    describe "links" do
+      it { should have_link 'Home', href: store_path }
+    end
+
+    describe "cart" do
+      
+      context "when empty" do
+        it { should have_selector '#side #cart [style="display: none"]' }
+      end
+
+      context "with items" do
+        before { click_button "Add to Cart" }
+
+        it { should have_selector '#side #cart', text: 'Your Cart' }
+        it { should_not have_selector '#side #cart [style="display: none"]' }
+      end
+    end
+  end
 
   describe "catalog listing" do
-  	it "has the correct page elements" do
-  		expect(page).to have_selector '#columns #side a', minimum: 4
-      expect(page).to have_selector '#time'
-      expect(page).to have_selector '#main .entry', count: 3
+
+  	describe "elements" do
+
+      it { should have_selector '#main .entry', count: 2 }
   	end
-
-    it "has the correct links" do
-      expect(page).to have_link 'Home', href: store_path
-    end
-
-    it "has 'Your cart' in the sidebart" do
-      expect(page).to have_selector '#side #cart', text: 'Your Cart'
-    end
 
     it "lists all of the products" do
       Product.all.each do |product|
