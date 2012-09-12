@@ -4,14 +4,41 @@ describe LineItemsController do
   let(:product) { create(:product) }
   let(:cart) { create(:cart) }
 
+
   describe "POST :create" do
     before do
       session[:cart_id] = cart.id
       post :create, product_id: product.id
     end
 
+    it "creates new line_item using html" do
+      expect { post :create, product_id: create(:product) }.to change(LineItem, :count).by(1)
+    end
+
     it "assigns current_cart to @cart" do
       expect(assigns(:cart)).to eq cart
+    end
+
+    context "when using AJAX" do
+      render_views
+      
+      it "creates new LineItem" do
+        expect do
+          xhr :post, :create, product_id: create(:product)
+        end.to change(LineItem, :count).by(1)
+      end
+
+      it "responds with success" do
+        xhr :post, :create, product_id: create(:product)
+        expect(response).to be_success
+      end
+
+      it "returns LineItem with Product.title css id: current_item" do
+        xhr :post, :create, product_id: product
+        assert_select_jquery :html, '#cart' do
+          assert_select 'tr#current_item td', product.title
+        end
+      end
     end
 
     context "when user has a cart" do
