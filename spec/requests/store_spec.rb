@@ -36,8 +36,12 @@ describe "Store" do
   describe "catalog listing" do
 
   	describe "elements" do
-
       it { should have_selector '#main .entry', count: 2 }
+      
+      context "needed for store.js.coffee" do
+        it { should have_selector '.store .entry img', count: 2 }
+        it { should have_selector '.entry input[type=submit]' }
+      end
   	end
 
     it "lists all of the products" do
