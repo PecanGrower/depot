@@ -2,8 +2,6 @@ Depot::Application.routes.draw do
 
   root to: 'store#index', as: 'store'
 
-  # get "store/index"
-  # resources :store, only: [:index]
   resources :products
   resources :carts, only: [:show, :destroy]
   resources :line_items, only: [:create, :destroy]
