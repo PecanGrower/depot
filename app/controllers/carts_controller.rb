@@ -7,6 +7,9 @@ class CartsController < ApplicationController
   def destroy
     @cart = current_cart
     @cart.destroy
-    redirect_to store_url
+    respond_to do |format|
+      format.html { redirect_to store_url }
+      format.js
+    end
   end
 end

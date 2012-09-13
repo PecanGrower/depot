@@ -1,4 +1,4 @@
-if ($('#cart tr').length == 1) { $('#cart').show('fade', 2000); }
+if ($('#cart').is(':hidden')) { $('#cart').show('fade', 2000); }
 
 $('#cart').html("<%=j render @cart %>");
 

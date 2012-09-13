@@ -23,6 +23,16 @@ describe CartsController do
     it "deletes cart" do
       expect{ delete :destroy, id: cart }.to change(Cart, :count).by(-1)
     end
+
+    context "using AJAX" do
+      render_views
+      
+      it "deletes cart" do
+        expect do
+          xhr :delete, :destroy, id: any_cart
+        end.to change(Cart, :count).by(-1)
+      end
+    end
   end
 
   # current_cart is an inherrited private method from application_controller
