@@ -11,6 +11,9 @@ describe LineItem do
 
   it { should be_valid }
 
+  it { should have_db_column(:order_id).of_type(:integer) }
+  it { should have_db_index(:order_id) }
+
   describe "attributes" do
     
     it { should respond_to :cart_id }
@@ -86,6 +89,7 @@ describe LineItem do
     
     it { should respond_to :cart }
     it { should respond_to :product }
+    it { should belong_to :order }
   end
 
   describe "methods" do
