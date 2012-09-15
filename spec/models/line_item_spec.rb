@@ -11,8 +11,6 @@ describe LineItem do
 
   it { should be_valid }
 
-  it { should have_db_column(:order_id).of_type(:integer) }
-  it { should have_db_index(:order_id) }
 
   describe "attributes" do
     
@@ -20,6 +18,8 @@ describe LineItem do
     it { should respond_to :product_id }
     it { should respond_to :quantity }
     it { should respond_to :price }
+    it { should have_db_column(:order_id).of_type(:integer) }
+    it { should have_db_index(:order_id) }
 
     describe "MassAssignment protection" do
       
@@ -44,9 +44,9 @@ describe LineItem do
 
     describe "validate" do
       
-      it "is invalid without :cart_id" do
+      it "is valid without :cart_id" do
         line_item.cart_id = nil
-        expect(line_item).not_to be_valid
+        expect(line_item).to be_valid
       end
 
       it "is invalid without :product_id" do

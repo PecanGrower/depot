@@ -30,6 +30,37 @@ describe "Store" do
         it { should have_selector '#side #cart', text: 'Your Cart' }
         it { should_not have_selector '#side #cart [style="display: none"]' }
       end
+
+      describe "checkout button" do
+
+        it "is displayed" do
+          expect(page).to have_selector "form.button_to 
+                                         [action=\"#{new_order_path}\"]
+                                         [method=get]"
+        end
+
+        context "when the cart is empty" do
+          
+          it "redirects to Store page" do
+            click_button "Checkout"
+            expect(page).to have_selector '.store'
+          end
+
+          it "displays a notice" do
+            click_button "Checkout"
+            expect(page).to have_selector '.store #notice'
+          end
+        end
+
+        context "when cart has LineItem" do
+          before { click_button "Add to Cart" }
+
+          it "redirects to New Order page" do
+            click_button "Checkout"
+            expect(page).to have_selector '.orders'
+          end
+        end
+      end
     end
   end
 

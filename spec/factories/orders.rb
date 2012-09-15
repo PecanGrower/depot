@@ -5,6 +5,6 @@ FactoryGirl.define do
     name "MyString"
     address "MyText"
     email "MyString"
-    pay_type "MyString"
+    pay_type "Credit card"
   end
 end
