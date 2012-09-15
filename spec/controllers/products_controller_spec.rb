@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe ProductsController do
 	let!(:all_products) { 2.times.map { create(:product) } }
+	let(:product) { create(:product) }
 	
 	describe "GET :index" do
 		before { get :index }		
@@ -16,7 +17,6 @@ describe ProductsController do
 	end
 
 	describe "GET :show" do
-		let(:product) { create(:product) }
 		before { get :show, id: product }
 
 		it "assigns correct Product to @product" do
@@ -78,7 +78,6 @@ describe ProductsController do
 	end
 
 	describe "GET :edit" do
-		let(:product) { create(:product) }
 		before { get :edit, id: product }
 
 		it "assigns correct Product to @product" do
@@ -91,7 +90,6 @@ describe ProductsController do
 	end
 
 	describe "PUT :update" do
-		let(:product) { create(:product) }
 
 		context "with valid attributes" do
 			before do
@@ -131,8 +129,7 @@ describe ProductsController do
 	end
 
 	describe "DELETE :destroy" do
-		let!(:product) { create(:product) }
-		before {  }
+		before { product }
 
 		it "assigns the correct Product to @product" do
 			delete :destroy, id: product
@@ -149,5 +146,11 @@ describe ProductsController do
 			delete :destroy, id: product
 			expect(response).to redirect_to products_path
 		end
+	end
+
+	describe "GET :who_bought" do
+		before { get :who_bought, id: product }
+
+		it { should assign_to(:product)  }
 	end
 end

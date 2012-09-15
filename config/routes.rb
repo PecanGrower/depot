@@ -4,7 +4,9 @@ Depot::Application.routes.draw do
 
   root to: 'store#index', as: 'store'
 
-  resources :products
+  resources :products do
+    get :who_bought, on: :member
+  end
   resources :carts, only: [:show, :destroy]
   resources :line_items, only: [:create, :destroy]
 

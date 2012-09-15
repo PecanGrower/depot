@@ -39,4 +39,11 @@ class ProductsController < ApplicationController
     @product.delete
     redirect_to products_path
   end
+
+  def who_bought
+    @product = Product.find(params[:id])
+    respond_to do |format|
+      format.atom
+    end
+  end
 end

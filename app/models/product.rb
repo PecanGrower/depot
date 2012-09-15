@@ -2,6 +2,7 @@ class Product < ActiveRecord::Base
   attr_accessible :description, :image_url, :title, :price
 
   has_many :line_items
+  has_many :orders, through: :line_items
 
   validates :title, length: { minimum: 10 }, uniqueness: true
   validates :description, presence: true

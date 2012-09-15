@@ -73,6 +73,7 @@ describe Product do
   describe "has associations" do
     
     it { should respond_to :line_items }
+    it { should have_many(:orders).through :line_items }
 
     context "with dependent :line_items" do
       before do        
