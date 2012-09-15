@@ -1,5 +1,9 @@
 require File.expand_path('../boot', __FILE__)
 
+# load app config.yml
+require 'yaml'
+APP_CONFIG = YAML.load(File.read(File.expand_path('../../../app_config.yml', __FILE__)))
+
 require 'rails/all'
 
 if defined?(Bundler)
