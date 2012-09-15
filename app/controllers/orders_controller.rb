@@ -12,6 +12,7 @@ class OrdersController < ApplicationController
     @order = Order.new(params[:order])
     @order.add_line_items_from_cart(current_cart)
     if @order.save
+      OrderNotifier.received(@order).deliver
       redirect_to store_url, notice: "Thank you for your order."
     else
       @cart = current_cart #cart display
